@@ -15,7 +15,7 @@ public final class Amounts {
     private Amounts() {}
 
     private static final Pattern AMOUNT =
-            Pattern.compile("(?:Rs\\.?|INR)\\s*([0-9,]+\\.[0-9]{2})");
+            Pattern.compile("(?:Rs\\.?|INR)\\s*([0-9,]+(?:\\.[0-9]{1,2})?)");
 
     private static final Pattern BALANCE = Pattern.compile(
             "(?:Avl\\s*Bal|Available\\s*Balance|BalAvl|Avl\\s*Limit)\\s*:?\\s*"
@@ -37,6 +37,8 @@ public final class Amounts {
     }
 
     private static BigDecimal toDecimal(String raw) {
-        return new BigDecimal(raw.replace(",", "")).setScale(2);
+        String cleaned = raw.replace(",", "");
+        if (!cleaned.contains(".")) cleaned = cleaned + ".00";
+        return new BigDecimal(cleaned).setScale(2);
     }
 }

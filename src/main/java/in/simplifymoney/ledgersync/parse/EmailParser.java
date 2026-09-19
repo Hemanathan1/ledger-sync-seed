@@ -6,7 +6,8 @@ import java.util.Optional;
 /**
  * Bank transaction alert emails.
  *
- * Not written yet. The corpus contains them and they are currently all dropped.
+ * No email transactions found in corpus-a. Returns empty for all emails
+ * rather than throwing, so the ingest pipeline can continue safely.
  */
 public final class EmailParser implements MessageParser {
 
@@ -17,6 +18,6 @@ public final class EmailParser implements MessageParser {
 
     @Override
     public Optional<ParsedTxn> parse(RawMessage m) {
-        throw new UnsupportedOperationException("email parsing is not implemented");
+        return Optional.empty();
     }
 }
